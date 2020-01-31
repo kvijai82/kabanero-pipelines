@@ -3,7 +3,7 @@
 # Kabanero Pipelines
 The kabanero-pipelines repository contains a collection of Tekton tasks and pipelines that are intended to work out of the box with the featured Kabanero collections to illustrate a CI/CD work flow.  The pipelines and tasks can be executed manually or via a webhook.  The steps below walk one through on how to drive a pipeline manually (using a script or a CLI), which is useful for pipeline development, or by driving it via a webhook, which is perfect for CI/CD workflows once there is a functional pipeline.
 
-# Prerequisites
+# Prerequisites --
 
 You need to have the Kabanero foundation installed on Red Hat Origin Community Distribution of Kubernetes (OKD) or OpenShift Container Platform (OCP) cluster.  It has the necessary Kabanero, Isito, Knative, and Tekton components installed.  Please refer to https://github.com/kabanero-io/kabanero-foundation for more details on installing the Kabanero foundation.
 
