@@ -1,0 +1,22 @@
+language: generic
+
+go:
+  - 1.12.x
+
+os: linux
+dist: bionic
+
+# note before_deploy will run before each deploy provider
+before_deploy:
+  - pwd
+  - ls 
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key: $GITHUB_TOKEN
+  file: ci/release/*
+  file_glob: true
+  on:
+    tags: true
+    repo: kvijai82/kabanero-pipelines
