@@ -8,8 +8,7 @@ dist: bionic
 
 # note before_deploy will run before each deploy provider
 before_deploy:
-  - pwd
-  - ls 
+  - ./ci/package.sh
 
 deploy:
   provider: releases
