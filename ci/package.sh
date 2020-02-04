@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-base_dir="/home/travis/build/kabanero/kabanero-pipelines"
+base_dir="/home/travis/build/kvijai82/kabanero-pipelines"
 pipelines_dir=$base_dir/pipelines/incubator
 
 # directory to store assets for test or release
@@ -32,6 +32,7 @@ do
 done
 
 # build archive of pipelines
-tar -czf $assets_dir/default-kabanero-pipelines.tar.gz $pipelines_dir/*.yaml $asset_manifest
+cd $base_dir
+tar -czf $assets_dir/default-kabanero-pipelines.tar.gz pipelines/incubator/*.yaml $asset_manifest
 echo -e "--- Created kabanero-pipelines.tar.gz"
 rm $asset_manifest
