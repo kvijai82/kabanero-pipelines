@@ -35,8 +35,7 @@ done
 # build archive of pipelines
 cd $pipelines_dir
 cp $asset_manifest $pipelines_dir
-tar -czf $assets_dir/default-kabanero-pipelines.tar.gz ./*
+tar -czf $assets_dir/default-kabanero-pipelines.tar.gz *.yaml
 echo -e "--- Created kabanero-pipelines.tar.gz"
 pwd
-ls
-tar -xzf $assets_dir/default-kabanero-pipelines.tar.gz 
+tar -xvf $assets_dir/default-kabanero-pipelines.tar.gz 
