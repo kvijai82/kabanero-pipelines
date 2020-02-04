@@ -36,4 +36,3 @@ cd $pipelines_dir
 cp $asset_manifest $pipelines_dir
 tar -czf $assets_dir/default-kabanero-pipelines.tar.gz *
 echo -e "--- Created kabanero-pipelines.tar.gz"
-rm $asset_manifest
