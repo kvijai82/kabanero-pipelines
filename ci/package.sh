@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+current_dir=$(pwd)
+echo "Curent dir = $current_dir"
+
 base_dir="/home/travis/build/kvijai82/kabanero-pipelines"
 pipelines_dir=$base_dir/pipelines/incubator
 
