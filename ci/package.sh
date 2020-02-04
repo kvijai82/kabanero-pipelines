@@ -1,10 +1,7 @@
 #!/bin/bash
 set -e
 
-current_dir=$(pwd)
-echo "Curent dir = $current_dir"
-
-base_dir="/home/travis/build/kvijai82/kabanero-pipelines"
+base_dir="$(pwd)"
 pipelines_dir=$base_dir/pipelines/incubator
 
 # directory to store assets for test or release
@@ -35,7 +32,8 @@ do
 done
 
 # build archive of pipelines
-cd $base_dir
-tar -czf $assets_dir/default-kabanero-pipelines.tar.gz pipelines/incubator/*.yaml $asset_manifest
+cd $pipelines_dir
+cp $asset_manifest $pipelines_dir
+tar -czf $assets_dir/default-kabanero-pipelines.tar.gz *
 echo -e "--- Created kabanero-pipelines.tar.gz"
 rm $asset_manifest
