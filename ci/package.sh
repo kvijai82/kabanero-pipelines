@@ -2,6 +2,7 @@
 set -e
 
 base_dir="$(pwd)"
+echo "base_dir: $base_dir"
 pipelines_dir=$base_dir/pipelines/incubator
 
 # directory to store assets for test or release
