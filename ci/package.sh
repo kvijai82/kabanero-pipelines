@@ -38,4 +38,7 @@ cp $asset_manifest $pipelines_dir
 tar -czf $assets_dir/default-kabanero-pipelines.tar.gz *.yaml
 echo -e "--- Created kabanero-pipelines.tar.gz"
 pwd
+cd $assets_dir
+ls
+echo "contents of tar file"
 tar -xvf $assets_dir/default-kabanero-pipelines.tar.gz 
