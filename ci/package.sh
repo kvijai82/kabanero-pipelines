@@ -39,7 +39,7 @@ cd $pipelines_dir
 cp $asset_manifest $pipelines_dir
 tar -czf default-kabanero-pipelines.tar.gz *.yaml
 echo -e "--- Created kabanero-pipelines.tar.gz"
-cp default-kabanero-pipelines.tar.gz assets_dir
+cp default-kabanero-pipelines.tar.gz $assets_dir
 
 cd $assets_dir
 ls
