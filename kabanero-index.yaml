@@ -23,7 +23,7 @@ stacks:
   name: Eclipse MicroProfile®
   pipelines:
   - id: default
-    sha256: e1172a8c9f8ab2749c8ca7599c3e7454810021b60a439d75de77b1b4cfea794e
+    sha256: becbe99c0bdd76b45501e109d6fcb23d71cb3b80f6c155a1274f8a9820054435
     url: https://github.com/kabanero-io/kabanero-pipelines/releases/download/0.6.0-alpha4/default-kabanero-pipelines.tar.gz
   templates:
   - id: default
@@ -49,7 +49,7 @@ stacks:
   name: Spring Boot®
   pipelines:
   - id: default
-    sha256: e1172a8c9f8ab2749c8ca7599c3e7454810021b60a439d75de77b1b4cfea794e
+    sha256: becbe99c0bdd76b45501e109d6fcb23d71cb3b80f6c155a1274f8a9820054435
     url: https://github.com/kabanero-io/kabanero-pipelines/releases/download/0.6.0-alpha4/default-kabanero-pipelines.tar.gz
   requirements:
     appsody-version: '>= 0.5.0'
@@ -80,7 +80,7 @@ stacks:
   name: Node.js Express
   pipelines:
   - id: default
-    sha256: e1172a8c9f8ab2749c8ca7599c3e7454810021b60a439d75de77b1b4cfea794e
+    sha256: becbe99c0bdd76b45501e109d6fcb23d71cb3b80f6c155a1274f8a9820054435
     url: https://github.com/kabanero-io/kabanero-pipelines/releases/download/0.6.0-alpha4/default-kabanero-pipelines.tar.gz
   templates:
   - id: scaffold
@@ -105,7 +105,7 @@ stacks:
   name: LoopBack 4
   pipelines:
   - id: default
-    sha256: e1172a8c9f8ab2749c8ca7599c3e7454810021b60a439d75de77b1b4cfea794e
+    sha256: becbe99c0bdd76b45501e109d6fcb23d71cb3b80f6c155a1274f8a9820054435
     url: https://github.com/kabanero-io/kabanero-pipelines/releases/download/0.6.0-alpha4/default-kabanero-pipelines.tar.gz
   templates:
   - id: scaffold
@@ -128,7 +128,7 @@ stacks:
   name: Node.js
   pipelines:
   - id: default
-    sha256: e1172a8c9f8ab2749c8ca7599c3e7454810021b60a439d75de77b1b4cfea794e
+    sha256: becbe99c0bdd76b45501e109d6fcb23d71cb3b80f6c155a1274f8a9820054435
     url: https://github.com/kabanero-io/kabanero-pipelines/releases/download/0.6.0-alpha4/default-kabanero-pipelines.tar.gz
   templates:
   - id: simple
