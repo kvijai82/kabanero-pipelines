@@ -1,0 +1,140 @@
+apiVersion: v2
+stacks:
+- default-image: java-microprofile
+  default-pipeline: default
+  default-template: default
+  description: Eclipse MicroProfile on Open Liberty & OpenJ9 using Maven
+  id: java-microprofile
+  images:
+  - id: java-microprofile
+    image: docker.io/kabanero/java-microprofile:0.2
+  language: java
+  license: Apache-2.0
+  maintainers:
+  - email: emijiang6@googlemail.com
+    github-id: Emily-Jiang
+    name: Emily Jiang
+  - email: neeraj.laad@gmail.com
+    github-id: neeraj-laad
+    name: Neeraj Laad
+  - email: ozzy@ca.ibm.com
+    github-id: BarDweller
+    name: Ozzy
+  name: Eclipse MicroProfile®
+  pipelines:
+  - id: default
+    sha256: 2defe70e8ff28e7d8e1b218138e14d3aab98a9397b071a6ebbde2cdc1c6b5ae7
+    url: https://github.com/kabanero-io/kabanero-pipelines/releases/download/0.6.0-alpha3/default-kabanero-pipelines.tar.gz
+  templates:
+  - id: default
+    url: https://github.com/kabanero-io/collections/releases/download/0.5.0/incubator.java-microprofile.v0.2.21.templates.default.tar.gz
+  version: 0.2.21
+- default-image: java-spring-boot2
+  default-pipeline: default
+  default-template: default
+  description: Spring Boot using OpenJ9 and Maven
+  id: java-spring-boot2
+  images:
+  - id: java-spring-boot2
+    image: docker.io/kabanero/java-spring-boot2:0.3
+  language: java
+  license: Apache-2.0
+  maintainers:
+  - email: schnabel@us.ibm.com
+    github-id: ebullient
+    name: Erin Schnabel
+  - email: ozzy@ca.ibm.com
+    github-id: bardweller
+    name: Ozzy Osborne
+  name: Spring Boot®
+  pipelines:
+  - id: default
+    sha256: 2defe70e8ff28e7d8e1b218138e14d3aab98a9397b071a6ebbde2cdc1c6b5ae7
+    url: https://github.com/kabanero-io/kabanero-pipelines/releases/download/0.6.0-alpha3/default-kabanero-pipelines.tar.gz
+  requirements:
+    appsody-version: '>= 0.5.0'
+    docker-version: '>= 17.09.0'
+  templates:
+  - id: default
+    url: https://github.com/kabanero-io/collections/releases/download/0.5.0/incubator.java-spring-boot2.v0.3.21.templates.default.tar.gz
+  - id: kotlin
+    url: https://github.com/kabanero-io/collections/releases/download/0.5.0/incubator.java-spring-boot2.v0.3.21.templates.kotlin.tar.gz
+  version: 0.3.21
+- default-image: nodejs-express
+  default-pipeline: default
+  default-template: simple
+  description: Express web framework for Node.js
+  id: nodejs-express
+  images:
+  - id: nodejs-express
+    image: docker.io/kabanero/nodejs-express:0.2
+  language: nodejs
+  license: Apache-2.0
+  maintainers:
+  - email: cnbailey@gmail.com
+    github-id: seabaylea
+    name: Chris Bailey
+  - email: neeraj.laad@gmail.com
+    github-id: neeraj-laad
+    name: Neeraj Laad
+  name: Node.js Express
+  pipelines:
+  - id: default
+    sha256: 2defe70e8ff28e7d8e1b218138e14d3aab98a9397b071a6ebbde2cdc1c6b5ae7
+    url: https://github.com/kabanero-io/kabanero-pipelines/releases/download/0.6.0-alpha3/default-kabanero-pipelines.tar.gz
+  templates:
+  - id: scaffold
+    url: https://github.com/kabanero-io/collections/releases/download/0.5.0/incubator.nodejs-express.v0.2.8.templates.scaffold.tar.gz
+  - id: simple
+    url: https://github.com/kabanero-io/collections/releases/download/0.5.0/incubator.nodejs-express.v0.2.8.templates.simple.tar.gz
+  version: 0.2.8
+- default-image: nodejs-loopback
+  default-pipeline: default
+  default-template: scaffold
+  description: LoopBack 4 API Framework for Node.js
+  id: nodejs-loopback
+  images:
+  - id: nodejs-loopback
+    image: docker.io/kabanero/nodejs-loopback:0.1
+  language: nodejs
+  license: Apache-2.0
+  maintainers:
+  - email: enjoyjava@gmail.com
+    github-id: raymondfeng
+    name: Raymond Feng
+  name: LoopBack 4
+  pipelines:
+  - id: default
+    sha256: 2defe70e8ff28e7d8e1b218138e14d3aab98a9397b071a6ebbde2cdc1c6b5ae7
+    url: https://github.com/kabanero-io/kabanero-pipelines/releases/download/0.6.0-alpha3/default-kabanero-pipelines.tar.gz
+  templates:
+  - id: scaffold
+    url: https://github.com/kabanero-io/collections/releases/download/0.5.0/incubator.nodejs-loopback.v0.1.8.templates.scaffold.tar.gz
+  version: 0.1.8
+- default-image: nodejs
+  default-pipeline: default
+  default-template: simple
+  description: Runtime for Node.js applications
+  id: nodejs
+  images:
+  - id: nodejs
+    image: docker.io/kabanero/nodejs:0.3
+  language: nodejs
+  license: Apache-2.0
+  maintainers:
+  - email: vieuxtech@gmail.com
+    github-id: sam-github
+    name: Sam Roberts
+  name: Node.js
+  pipelines:
+  - id: default
+    sha256: 2defe70e8ff28e7d8e1b218138e14d3aab98a9397b071a6ebbde2cdc1c6b5ae7
+    url: https://github.com/kabanero-io/kabanero-pipelines/releases/download/0.6.0-alpha3/default-kabanero-pipelines.tar.gz
+  templates:
+  - id: simple
+    url: https://github.com/kabanero-io/collections/releases/download/0.5.0/incubator.nodejs.v0.3.1.templates.simple.tar.gz
+  version: 0.3.1
+triggers:
+- id: incubator
+  url: https://github.com/kabanero-io/collections/releases/download/0.5.0/incubator.trigger.tar.gz
+  sha256: 7d3a0253453cf109efca35f3af350af3a8a11e04b34cdacbbdcdc6d3dbdf9d70
