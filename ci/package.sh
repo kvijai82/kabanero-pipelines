@@ -37,6 +37,10 @@ do
     fi
 done
 
+# Generate a manifest.yaml file for each file in the tar.gz file
+eventing_asset_manifest=$eventing_pipelines_dir/manifest.yaml
+echo "contents:" > $eventing_asset_manifest
+
 # for each of the assets generate a sha256 and add it to the manifest.yaml
 for asset_path in $(find $eventing_pipelines_dir -type f -name '*')
 do
@@ -45,8 +49,8 @@ do
     if [ -f $asset_path ] && [ "$(basename -- $asset_path)" != "manifest.yaml" ]
     then
         sha256=$(cat $asset_path | $sha256cmd | awk '{print $1}')
-        echo "- file: $asset_name" >> $asset_manifest
-        echo "  sha256: $sha256" >> $asset_manifest
+        echo "- file: $asset_name" >> $eventing_asset_manifest
+        echo "  sha256: $sha256" >> $eventing_asset_manifest
     fi
 done
 
