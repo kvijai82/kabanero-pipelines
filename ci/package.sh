@@ -8,7 +8,7 @@ set -e
 exec_hooks $script_dir/ext/pre_package.d
 
 pipelines_dir=$base_dir/pipelines/incubator
-eventing_pipelines_dir=$base_dir/pipelines/incubator/eventing-pipelines
+eventing_pipelines_dir=$base_dir/pipelines/experimental/eventing-pipelines
 
 # directory to store assets for test or release
 assets_dir=$base_dir/ci/assets
@@ -37,6 +37,10 @@ do
     fi
 done
 
+# Generate a manifest.yaml file for each file in the tar.gz file
+eventing_asset_manifest=$eventing_pipelines_dir/manifest.yaml
+echo "contents:" > $eventing_asset_manifest
+
 # for each of the assets generate a sha256 and add it to the manifest.yaml
 for asset_path in $(find $eventing_pipelines_dir -type f -name '*')
 do
@@ -45,15 +49,19 @@ do
     if [ -f $asset_path ] && [ "$(basename -- $asset_path)" != "manifest.yaml" ]
     then
         sha256=$(cat $asset_path | $sha256cmd | awk '{print $1}')
-        echo "- file: $asset_name" >> $asset_manifest
-        echo "  sha256: $sha256" >> $asset_manifest
+        echo "- file: $asset_name" >> $eventing_asset_manifest
+        echo "  sha256: $sha256" >> $eventing_asset_manifest
     fi
 done
 
 # build archive of pipelines
 tar -czf $assets_dir/default-kabanero-pipelines.tar.gz -C $pipelines_dir .
+sha256_default_tar_gz=$sha256cmd $assets_dir/default-kabanero-pipelines.tar.gz
+touch $assets_dir/default_tar_gz_sha256#$sha256_default_tar_gz
 tar -czf $assets_dir/eventing-kabanero-pipelines.tar.gz -C $eventing_pipelines_dir .
-echo -e "--- Created kabanero-pipelines.tar.gz"
+sha256_eventing_tar_gz=$sha256cmd $assets_dir/eventing-kabanero-pipelines.tar.gz
+touch $assets_dir/eventing_tar_gz_sha256#$sha256_eventing_tar_gz
+echo -e "--- Created pipeline artifacts"
 
 # expose an extension point for running after main 'package' processing
 exec_hooks $script_dir/ext/post_package.d
@@ -76,4 +84,3 @@ else
     stderr "failed building $IMAGE_REGISTRY/$IMAGE_REGISTRY_ORG/$INDEX_IMAGE:${INDEX_VERSION}"
     exit 1
 fi
-
