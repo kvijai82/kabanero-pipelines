@@ -1,8 +1,8 @@
-#Kabanero! on activate substitute StackId for text 'StackId'
+#Kabanero! on activate substitute Digest for text 'Digest'
 apiVersion: tekton.dev/v1alpha1
 kind: Task
 metadata:
-  name: StackId-build-push-task
+  name: build-push-task-Digest
 spec:
   inputs:
     resources:

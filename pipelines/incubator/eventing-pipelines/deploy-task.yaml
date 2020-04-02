@@ -1,8 +1,8 @@
-#Kabanero! on activate substitute StackId for text 'StackId'
+#Kabanero! on activate substitute Digest for text 'Digest'
 apiVersion: tekton.dev/v1alpha1
 kind: Task
 metadata:
-  name: StackId-deploy-task
+  name: deploy-task-Digest
 spec:
   inputs:
     resources:
@@ -11,8 +11,6 @@ spec:
     - name: docker-image
       type: image
     params:
-    - name: repository-name
-      default: StackId
     - name: app-deploy-file-name
       default: app-deploy.yaml
   steps:

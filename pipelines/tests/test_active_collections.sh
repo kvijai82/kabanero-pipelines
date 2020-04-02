@@ -53,7 +53,7 @@ docker_url=$2
 
 # Process oc get collections  output to get an array of active collections
 declare -a active_collections
-eval $( printf "active_collections=("; oc get collections | awk '{if ($1 !~ "NAME"){printf " "$1" "}'}; printf ")"  )
+eval $( printf "active_collections=("; oc get stacks | awk '{if ($1 !~ "NAME"){printf " "$1" "}'}; printf ")"  )
 
 # Remove any previously running applications and pipelines
 oc delete pipelineruns --all
@@ -71,7 +71,7 @@ do
    echo
    echo "Starting pipeline run for collection: "$collection
    echo
-   command="./kabanero-pipelines/pipelines/incubator/manual-pipeline-runs/manual-pipeline-run-script.sh -r $git_url/$collection  -i $docker_url/$collection -c $collection"
+   command="./kabanero-pipelines/pipelines/sample-helper-files/manual-pipeline-run-script.sh -r $git_url/$collection  -i $docker_url/$collection -c $collection"
    echo $command
    eval $command 
    

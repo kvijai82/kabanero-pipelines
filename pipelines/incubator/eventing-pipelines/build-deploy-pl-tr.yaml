@@ -1,8 +1,8 @@
-#Kabanero! on activate substitute StackId for text 'StackId'
+#Kabanero! on activate substitute Digest for text 'Digest'
 apiVersion: tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
-  name: StackId-build-pl-pullrequest-binding
+  name: build-deploy-pl-Digest-pullrequest-binding
   namespace: tekton-pipelines
 spec:
   params:
@@ -22,7 +22,7 @@ spec:
 apiVersion: tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
-  name: StackId-build-pl-push-binding
+  name: build-deploy-pl-Digest-push-binding
   namespace: tekton-pipelines
 spec:
   params:
@@ -33,16 +33,18 @@ spec:
   - name: docker-imagename
     value: $(body.repository.name)
   - name: docker-imagetag
-    value: $(body.head_commit.id)
+    value: $(body.head_commit.id)    
   - name: event-type
     value: $(header.X-Github-Event)
+  - name: event-ref
+    value: $(body.ref)
   - name: webhooks-tekton-git-branch
     value: $(body.webhooks-tekton-git-branch)
 ---
 apiVersion: tekton.dev/v1alpha1
 kind: TriggerTemplate
 metadata:
-  name: StackId-build-pl-template
+  name: build-deploy-pl-Digest-template
   namespace: tekton-pipelines
 spec:
   params:
@@ -98,7 +100,7 @@ spec:
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineRun
     metadata:
-      generateName: StackId-build-pl-run-
+      generateName: build-deploy-pl-Digest-run-
       namespace: $(params.webhooks-tekton-target-namespace)
       labels:
         webhooks.tekton.dev/gitServer: $(params.webhooks-tekton-git-server)
@@ -108,10 +110,12 @@ spec:
     spec:
       serviceAccountName: $(params.webhooks-tekton-service-account)
       pipelineRef:
-        name: StackId-build-pl
+        name: build-deploy-pl-Digest
       params:
       - name: event-type
         value: $(params.event-type)
+      - name: event-ref
+        value: $(params.event-ref)
       - name: docker-imagename
         value: $(params.docker-imagename)
       - name: docker-imagetag
@@ -121,5 +125,7 @@ spec:
         resourceRef:
           name: git-source-$(uid)
       - name: docker-image
-        resourceRef:
+        resourceRef: 
           name: docker-image-$(uid)
+
+

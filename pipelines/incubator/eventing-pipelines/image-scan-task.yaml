@@ -4,7 +4,7 @@
 apiVersion: tekton.dev/v1alpha1
 kind: Task
 metadata:
-  name: StackId-image-scan-task
+  name: image-scan-task-Digest
 spec:
   inputs:
     resources:

@@ -2,7 +2,7 @@
 apiVersion: tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
-  name: StackId-build-pl-pullrequest-binding
+  name: StackId-build-push-jk-pl-pullrequest-binding
   namespace: tekton-pipelines
 spec:
   params:
@@ -22,7 +22,7 @@ spec:
 apiVersion: tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
-  name: StackId-build-pl-push-binding
+  name: StackId-build-push-jk-pl-push-binding
   namespace: tekton-pipelines
 spec:
   params:
@@ -42,7 +42,7 @@ spec:
 apiVersion: tekton.dev/v1alpha1
 kind: TriggerTemplate
 metadata:
-  name: StackId-build-pl-template
+  name: StackId-build-push-jk-pl-template
   namespace: tekton-pipelines
 spec:
   params:
@@ -98,7 +98,7 @@ spec:
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineRun
     metadata:
-      generateName: StackId-build-pl-run-
+      generateName: StackId-build-push-jk-pl-run-
       namespace: $(params.webhooks-tekton-target-namespace)
       labels:
         webhooks.tekton.dev/gitServer: $(params.webhooks-tekton-git-server)
@@ -108,18 +108,20 @@ spec:
     spec:
       serviceAccountName: $(params.webhooks-tekton-service-account)
       pipelineRef:
-        name: StackId-build-pl
+        name: StackId-build-push-jk-pl
       params:
       - name: event-type
         value: $(params.event-type)
       - name: docker-imagename
-        value: $(params.docker-imagename)
+        value: ""
       - name: docker-imagetag
-        value: $(params.docker-imagetag)
+        value: ""
       resources:
       - name: git-source
         resourceRef:
           name: git-source-$(uid)
       - name: docker-image
-        resourceRef:
+        resourceRef: 
           name: docker-image-$(uid)
+
+

@@ -1,8 +1,14 @@
 #!/bin/bash
 set -e
 
-base_dir=$(pwd)
+# setup environment
+. $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/env.sh
+
+# expose an extension point for running before main 'package' processing
+exec_hooks $script_dir/ext/pre_package.d
+
 pipelines_dir=$base_dir/pipelines/incubator
+eventing_pipelines_dir=$base_dir/pipelines/incubator/eventing-pipelines
 
 # directory to store assets for test or release
 assets_dir=$base_dir/ci/assets
@@ -31,15 +37,43 @@ do
     fi
 done
 
+# for each of the assets generate a sha256 and add it to the manifest.yaml
+for asset_path in $(find $eventing_pipelines_dir -type f -name '*')
+do
+    asset_name=${asset_path#$eventing_pipelines_dir/}
+    echo "Asset name: $asset_name"
+    if [ -f $asset_path ] && [ "$(basename -- $asset_path)" != "manifest.yaml" ]
+    then
+        sha256=$(cat $asset_path | $sha256cmd | awk '{print $1}')
+        echo "- file: $asset_name" >> $asset_manifest
+        echo "  sha256: $sha256" >> $asset_manifest
+    fi
+done
+
 # build archive of pipelines
 tar -czf $assets_dir/default-kabanero-pipelines.tar.gz -C $pipelines_dir .
+tar -czf $assets_dir/eventing-kabanero-pipelines.tar.gz -C $eventing_pipelines_dir .
 echo -e "--- Created kabanero-pipelines.tar.gz"
-# build archive of pipelines
-#cd $pipelines_dir
-#cp $asset_manifest $pipelines_dir
-#tar -czf default-kabanero-pipelines.tar.gz *.yaml
-#echo -e "--- Created kabanero-pipelines.tar.gz"
-#cp default-kabanero-pipelines.tar.gz $assets_dir
 
-#cd $assets_dir
-#ls
+# expose an extension point for running after main 'package' processing
+exec_hooks $script_dir/ext/post_package.d
+
+nginx_arg=
+
+echo "BUILDING: $IMAGE_REGISTRY_ORG/$INDEX_IMAGE:${INDEX_VERSION}" > ${build_dir}/image.$INDEX_IMAGE.${INDEX_VERSION}.log
+if image_build ${build_dir}/image.$INDEX_IMAGE.${INDEX_VERSION}.log \
+    $nginx_arg \
+    -t $IMAGE_REGISTRY/$IMAGE_REGISTRY_ORG/$INDEX_IMAGE \
+    -t $IMAGE_REGISTRY/$IMAGE_REGISTRY_ORG/$INDEX_IMAGE:${INDEX_VERSION} \
+    -f $script_dir/nginx/Dockerfile $script_dir
+then
+    echo "$IMAGE_REGISTRY/$IMAGE_REGISTRY_ORG/$INDEX_IMAGE" >> $build_dir/image_list
+    echo "$IMAGE_REGISTRY/$IMAGE_REGISTRY_ORG/$INDEX_IMAGE:${INDEX_VERSION}" >> $build_dir/image_list
+    echo "created $IMAGE_REGISTRY_ORG/$INDEX_IMAGE:${INDEX_VERSION}"
+    trace "${build_dir}/image.$INDEX_IMAGE.${INDEX_VERSION}.log"
+else
+    stderr "${build_dir}/image.$INDEX_IMAGE.${INDEX_VERSION}.log"
+    stderr "failed building $IMAGE_REGISTRY/$IMAGE_REGISTRY_ORG/$INDEX_IMAGE:${INDEX_VERSION}"
+    exit 1
+fi
+
