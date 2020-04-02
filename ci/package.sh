@@ -56,11 +56,11 @@ done
 
 # build archive of pipelines
 tar -czf $assets_dir/default-kabanero-pipelines.tar.gz -C $pipelines_dir .
-sha256_default_tar_gz=$(($sha256cmd $assets_dir/default-kabanero-pipelines.tar.gz) | awk '{print $1}')
-touch $assets_dir/default-kabanero-pipelines-tar-gz_sha256#$sha256_default_tar_gz
+touch $assets_dir/default-kabanero-pipelines-tar-gz-sha256
+echo $(($sha256cmd $assets_dir/default-kabanero-pipelines.tar.gz) | awk '{print $1}') >> $assets_dir/default-kabanero-pipelines-tar-gz-sha256
 tar -czf $assets_dir/eventing-kabanero-pipelines.tar.gz -C $eventing_pipelines_dir .
-sha256_eventing_tar_gz=$(($sha256cmd $assets_dir/eventing-kabanero-pipelines.tar.gz) | awk '{print $1}')
-touch $assets_dir/eventing-kabanero-pipelines-tar-gz_sha256#$sha256_eventing_tar_gz
+touch $assets_dir/eventing-kabanero-pipelines-tar-gz-sha256
+echo $(($sha256cmd $assets_dir/eventing-kabanero-pipelines.tar.gz) | awk '{print $1}') >> $assets_dir/eventing-kabanero-pipelines-tar-gz-sha256
 echo -e "--- Created pipeline artifacts"
 
 # expose an extension point for running after main 'package' processing
